@@ -1,0 +1,12 @@
+firebase-admin==6.2.0
+sentence-transformers==2.2.2
+numpy==1.24.3
+functions-framework==3.0.0
+
+flask
+flask-cors
+waitress
+firebase-admin
+sentence-transformers
+faiss-cpu
+numpy
