@@ -8,6 +8,7 @@ import os
 from sentence_transformers import SentenceTransformer
 from rapidfuzz import fuzz
 import datetime
+from collections import Counter
 
 # === Đường dẫn ===
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -54,6 +55,7 @@ def search():
     data = request.get_json()
     query = data.get("query", "").strip()
     top_k = int(data.get("top_k", 25))
+    log = data.get("log", True)
 
     if not query:
         return jsonify(metadata[:top_k])
@@ -63,7 +65,8 @@ def search():
     user_agent = request.headers.get("User-Agent", "Unknown")
 
     # Ghi log tìm kiếm
-    log_search_query(query, ip_address, user_agent)
+    if log:
+        log_search_query(query, ip_address, user_agent)
 
     # Semantic embedding
     query_vector = model.encode([query], convert_to_numpy=True).astype("float32")
@@ -101,6 +104,20 @@ def get_search_logs():
         logs = []
 
     return jsonify(logs)
+
+@app.route("/search/top_keywords", methods=["GET"])
+def get_top_keywords():
+    try:
+        with open(SEARCH_LOG_PATH, "r", encoding="utf-8") as f:
+            logs = json.load(f)
+    except:
+        return jsonify([])
+
+    # Đếm tần suất từng query
+    keywords = [entry["query"].strip().lower() for entry in logs if entry.get("query")]
+    top_counts = Counter(keywords).most_common(10)
+
+    return jsonify([{"keyword": k, "count": v} for k, v in top_counts])
 
 # === Chạy app bằng waitress ===
 if __name__ == "__main__":
