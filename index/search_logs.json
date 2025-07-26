@@ -1,5 +1,29 @@
 [
   {
+    "query": "chậu nhựa",
+    "timestamp": "2025-07-26T23:05:10.817217",
+    "ip": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36"
+  },
+  {
+    "query": "hỗ trợ cây ra hoa",
+    "timestamp": "2025-07-26T23:04:29.423613",
+    "ip": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36"
+  },
+  {
+    "query": "hỗ trợ cây ra hoa",
+    "timestamp": "2025-07-26T23:04:14.261562",
+    "ip": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36"
+  },
+  {
+    "query": "thuốc trừ sâu bệnh",
+    "timestamp": "2025-07-26T23:03:50.411409",
+    "ip": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36"
+  },
+  {
     "query": "đất trồng",
     "timestamp": "2025-07-26T22:49:49.733820",
     "ip": "127.0.0.1",
