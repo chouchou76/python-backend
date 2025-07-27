@@ -1,5 +1,17 @@
 [
   {
+    "query": "hạt giống mầm rau muống",
+    "timestamp": "2025-07-27T11:28:26.567424",
+    "ip": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36"
+  },
+  {
+    "query": "hạt giống pn",
+    "timestamp": "2025-07-27T10:45:49.609539",
+    "ip": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36"
+  },
+  {
     "query": "chậu nhựa",
     "timestamp": "2025-07-26T23:05:10.817217",
     "ip": "127.0.0.1",

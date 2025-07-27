@@ -10,6 +10,15 @@ from rapidfuzz import fuzz
 import datetime
 from collections import Counter
 
+import firebase_admin
+from firebase_admin import credentials, firestore
+
+# === Khởi tạo Firebase ===
+SERVICE_KEY_PATH = os.path.join(os.path.dirname(__file__), "..", "credentials", "serviceAccountKey.json")
+cred = credentials.Certificate(SERVICE_KEY_PATH)
+firebase_admin.initialize_app(cred)
+db = firestore.client()
+
 # === Đường dẫn ===
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 FAISS_INDEX_PATH = os.path.join(BASE_DIR, "..", "index", "faiss.index")
@@ -27,6 +36,15 @@ model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
 # === Flask App ===
 app = Flask(__name__)
 CORS(app)
+
+# === Ghi log vào Firestore ===
+def log_search_query_firestore(query, ip, user_agent):
+    db.collection("search_logs").add({
+        "query": query,
+        "timestamp": datetime.datetime.utcnow().isoformat(),
+        "ip": ip,
+        "user_agent": user_agent
+    })
 
 # === Hàm ghi log tìm kiếm ===
 def log_search_query(query, ip_address, user_agent):
@@ -66,6 +84,7 @@ def search():
 
     # Ghi log tìm kiếm
     if log:
+        log_search_query_firestore(query, ip_address, user_agent)
         log_search_query(query, ip_address, user_agent)
 
     # Semantic embedding
@@ -107,16 +126,9 @@ def get_search_logs():
 
 @app.route("/search/top_keywords", methods=["GET"])
 def get_top_keywords():
-    try:
-        with open(SEARCH_LOG_PATH, "r", encoding="utf-8") as f:
-            logs = json.load(f)
-    except:
-        return jsonify([])
-
-    # Đếm tần suất từng query
-    keywords = [entry["query"].strip().lower() for entry in logs if entry.get("query")]
+    docs = db.collection("search_logs").stream()
+    keywords = [doc.to_dict().get("query", "").strip().lower() for doc in docs]
     top_counts = Counter(keywords).most_common(10)
-
     return jsonify([{"keyword": k, "count": v} for k, v in top_counts])
 
 # === Chạy app bằng waitress ===
